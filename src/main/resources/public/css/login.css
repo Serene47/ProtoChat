@@ -1,0 +1,272 @@
+
+.flex-center-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.change-view-content {
+  text-align: center;
+  margin : 16px 0;
+}
+
+.change-view-button {
+  margin-left: 4px;
+  font-size: 18px;
+  font-weight: 600;
+  color : var(--primary);
+  cursor : pointer;
+}
+
+a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+}
+
+.forgot-password {
+  float: right;
+  margin: 0;
+  font-size: 13px;
+  outline : none;
+}
+
+button {
+    border-radius: 20px;
+    border: 1px solid var(--primary);
+    background-color: var(--primary);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+button:focus {
+    outline: none;
+}
+
+button.ghost {
+    background-color: transparent;
+    border-color: #fff;
+}
+
+button.inverse {
+    background-color: #fff;
+    border-color: var(--primary);
+    color : var(--primary);
+}
+
+form button {
+    display: block;
+    margin: auto;
+}
+
+input {
+    background-color: ghostwhite;
+    border: none;
+    padding: 12px;
+}
+
+
+main {
+	min-height : 520px;
+	display : flex;
+	flex-direction : column;
+	align-items : center;
+	justify-content : center;
+  margin-bottom: 50px;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+            0 10px 10px rgba(0,0,0,0.22);
+    position: relative;
+    overflow: hidden;
+    width: 90%;
+    max-width: 800px;
+    min-height: 550px;
+}
+
+.container h2 {
+	margin: 0;
+	font-size: 30px;
+  font-weight: bold;
+}
+
+.flip {
+  animation: flip 800ms;
+}
+
+@keyframes flip {
+
+  0%{
+    transform: rotateY(0deg);
+  }
+
+  100%{
+    transform: rotateY(360deg);
+  }
+
+}
+
+.form-container {
+    position: absolute;
+    top: 0;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    padding: 32px;
+}
+
+.form-container h2 {
+  text-align: center;
+}
+
+.sign-in-container {
+    left: 0;
+    z-index: 2;
+}
+
+.container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+}
+
+.sign-up-container {
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+.container.right-panel-active .sign-up-container {
+    opacity: 1;
+    z-index: 5;
+    animation: sign-up-show-slow 600ms;
+}
+
+
+
+@keyframes  sign-up-show-slow {
+    0%, 49.99% {
+        opacity: 0;
+    }
+
+    50%, 100% {
+        opacity: 1;
+    }
+}
+
+
+.overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+    display: none;
+}
+
+.overlay-container p {
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 20px 0 30px;
+}
+
+.container.right-panel-active .overlay-container{
+    transform: translateX(-100%);
+}
+
+.overlay {
+    background: -webkit-linear-gradient(to left, var(--primary), var(--primary-light));
+    background: linear-gradient(to left, var(--primary), var(--primary-light));
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    color: #FFFFFF;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.container.right-panel-active .overlay {
+    transform: translateX(50%);
+}
+
+.overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.overlay-left {
+    transform: translateX(-20%);
+}
+
+.container.right-panel-active .overlay-left {
+    transform: translateX(0);
+}
+
+.overlay-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.container.right-panel-active .overlay-right {
+    transform: translateX(20%);
+}
+
+@media ( min-width : 800px ) {
+
+  .change-view-content {
+    display: none;
+  }
+
+  .overlay-container {
+    display: block;
+  }
+
+  .form-container {
+    transition: all 0.6s ease-in-out;
+  }
+
+  .form-container  h2 {
+    margin-bottom: 16px;
+  }
+
+  .sign-up-container ,.sign-in-container  {
+    width: 50%;
+  }
+
+  .container.right-panel-active .sign-up-container {
+      transform: translateX(100%);
+  }
+
+
+}

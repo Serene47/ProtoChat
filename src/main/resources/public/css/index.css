@@ -1,0 +1,675 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+:root {
+    --primary : #006064 ;
+    --primary-light : #0097a7;
+    --text-primary : #555;
+    --feedback-error : #f09592;
+    --feedback-error-border : #c12d28;
+	--feedback-success : #5fbb72;;
+	--feedback-success-border : #5bc724;
+}
+
+*,*::after,*::before{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    color: var(--text-primary);
+    font-family: 'Montserrat', sans-serif;
+    font-size : 14px;
+    background-color : #f6f5f7;
+}
+
+.custom-scroll {
+	scrollbar-width: thin;
+  	scrollbar-color: #AAA #ccc;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background-color: #ccc;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #AAA;
+}
+
+a {
+    text-decoration: none;
+    color : #fff;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.hide {
+	display : none !important;
+}
+
+.clearfix {
+	clear : both;
+}
+
+header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.2rem;
+    color: var(--primary);
+    flex-wrap : wrap;
+}
+
+#userActions {
+	margin-left : auto;
+	font-size : 16px;
+}
+
+#userProfileButton {
+	padding : 0 8px;
+	color : var(--primary);
+	cursor : pointer;
+}
+
+#displayName {
+	display : none;
+	margin-right : 8px;
+}
+
+.dropdown {
+	position: relative;
+}
+
+.dropdown-menu {
+	position : absolute;
+	top: 36px;
+    right: 0px;
+    min-width: 200px;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    z-index : 3;
+    box-shadow : 0px 4px 4px rgba(0,0,0,0.15);
+}
+
+.dropdown-item {
+	cursor : pointer;
+    display: block;
+    width: 100%;
+    padding: 8px 20px;
+    color: var(--text-primary);
+}
+
+.dropdown-item:active {
+	background-color : var(--primary);
+	color : #fff;
+}
+
+main {
+    min-height: calc( 100vh - 80px);
+}
+
+
+.container section {
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+.contacts-wrapper .contacts-header,
+.messages-wrapper h3 {
+    background-color: var(--primary);
+    color : #fff;
+    padding: 1.2rem;
+    height: 65px;
+}
+
+.contacts-header {
+    display : flex;
+    align-items : center;
+}
+
+#toggleContacts {
+	margin-left : auto;
+	text-align : center;
+	width : 140px;
+	padding: 8px;
+	border-radius : 20px;
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    outline : none;
+}
+
+
+.contacts-wrapper{
+    background-color: #ddd;
+}
+
+.contact-list {
+    height: calc(100vh - (145px + 56px));
+    overflow: auto;
+}
+
+.contact-list li {
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    cursor : pointer;
+}
+
+.contact-selected h3 * {
+	vertical-align : middle;
+}
+
+#contactDisplayPicture {
+	position : relative;
+	z-index : 3;
+	cursor : pointer;
+	transition : all 400ms ease-in-out;
+}
+
+#contactDisplayPicture[data-enlarged=true] {
+	transform: translate(50px,50px) scale(5);
+	border-radius : 0;
+}
+
+
+.active-messages{
+    display: block;
+    height: 20px;
+    min-width: 26px;
+    width: fit-content;
+    border-radius: 12px;
+    background-color: var(--primary);
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    padding: 0 8px;
+}
+
+
+.messages-wrapper{
+    position: absolute;
+    left: 100vw;
+    width: 100vw;
+    top: 0;
+    display: none;
+    transition-property: left;
+    transition-duration: 1000ms;
+    transition-timing-function: ease-in-out;
+    background-color: #ddd;
+}
+
+.messages-wrapper.active {
+    display: block;
+    left: 0;
+}
+
+.message-container {
+    height: calc(100vh - 195px);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#messagePlaceholder {
+	min-height : 0.5rem;
+    flex-grow: 1;
+}
+
+#messageLog p{
+    padding: 0.5rem 1.2rem ;
+    border-radius: 4px;
+    margin: 1rem 1.5rem;
+    position: relative;
+    word-break : break-word;
+    width : max-content;
+    max-width : 60%;
+    line-height : 1.5;
+    z-index: 2;
+}
+
+#messageLog p.recieved {
+    background-color: var(--primary-light);
+    color: #fff;
+}
+
+#messageLog p.send {
+    background-color: #fff;
+    text-align: right;
+    margin-left : auto;
+}
+
+
+
+#messageLog p.recieved::before,
+#messageLog p.send::after{
+    content : "";
+    display: block;
+    height: 12px;
+    width: 12px; 
+    position: absolute;
+    transform: rotate(45deg) translateY(-50%);
+    top: 50%;
+    transform-origin: top;
+    background-color: inherit;
+    z-index: 1;
+}
+
+#messageLog p.send::after{
+    right: -6px;
+}
+
+#messageLog p.recieved::before {
+    left: -6px;
+}
+
+#messageLog p span{
+    position : absolute;
+    font-size : 12px;
+    bottom : 4px;
+    color: var(--text-primary);
+}
+
+#messageLog p.send span{
+    left : -60px;
+}
+
+#messageLog p.recieved span{
+    right : -60px;
+}
+
+#messageLog .date {
+    display: block;
+    margin: 0.5rem auto;
+    width: max-content;
+    font-size: 12px;
+    padding: 0.5rem;
+    background: #f0f8ff;
+    border-radius: 4px;
+}
+
+.messages-wrapper h3 i {
+    margin-right: 10px;
+}
+
+form[name=messageForm]{
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+form[name=messageForm] input{
+    flex-grow: 1;
+    margin: 0 8px;
+    padding: 10px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius : 4px;
+    outline: none;
+}
+
+form[name=messageForm] button{
+    margin: 0 8px;
+    padding: 10px 36px;
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    outline: none;
+    color: #fff;
+    border-radius : 24px;
+}
+
+form[name=messageForm] button i{
+    font-size: 20px;
+}
+
+.modal {
+	position :fixed;
+	top : 0;
+	left : 0;
+	width : 100vw;
+	min-height : 100vh;
+	overflow : auto;
+	background-color : rgba(0,0,0,0.4);
+	z-index : 4;
+}
+
+.modal-content {
+	position : absolute;
+	width : 90%;
+	max-width : 500px;
+	background-color : #fff;
+	margin: 5vh auto;
+	left : 0;
+	right :0;
+	border-radius : 8px;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+            0 10px 10px rgba(0,0,0,0.22);
+    padding : 24px;
+}
+
+
+.modal-content h2 {
+	color: var(--primary);
+	text-align : center;
+	margin-bottom : 32px;
+}
+
+.modal-content form {
+	margin : 16px 0;
+}
+
+
+.modal-content .button {
+    border-radius: 20px;
+    border: 1px solid var(--primary);
+    background-color : #fff;
+	color : var(--primary);
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    margin:4px 0px;
+}
+
+.modal-content .button:active {
+    transform: scale(0.95);
+}
+
+.modal-content .button:focus {
+    outline: none;
+}
+
+.modal-content .button.reverse {
+	background-color : #fff;
+	color : var(--primary);
+}
+
+
+form[name=updateDisplayPictureForm] {
+	display : flex;
+	flex-direction : column;
+	align-items : center;
+	justify-content :center;
+}
+
+.manage-dp {
+	position : relative;
+}
+
+.dp-controls {
+	position : absolute;
+	bottom : 25px;
+	right : 0px;
+	padding : 8px;
+	background-color : #fff;
+	border-radius : 16px;
+	border : 1px solid var(--primary);
+}
+
+.dp-controls button {
+	margin : 0 4px;
+	font-size : 14px;
+	background-color : #fff;
+	color : var(--primary);
+	border : none;
+	outline : none;
+	cursor : pointer;
+}
+
+
+#previewImage {
+	width : 200px;
+	height : 200px;
+	border-radius : 50%;
+	border : 1px solid #ccc;
+}
+
+#displayPic {
+	display : none;
+}
+
+form[name=updateDisplayPictureForm] .form-group {
+	height : auto;
+}
+
+
+.close-modal-button {
+	background-color : #fff;
+	border : 1px solid var(--primary);
+	color : var(--primary);
+	padding: 4px 6px;
+	border-radius : 2px;
+	float: right;
+    outline: none;
+    cursor : pointer;
+}
+
+
+.thumbnail {
+	
+	width : 30px;
+	height : 30px;
+	margin-right : 8px;
+	border-radius : 50%;
+}
+
+.thumbnail,.contact-display-name {
+	vertical-align : middle;
+}
+
+
+.feedback {
+	padding : 8px;
+	margin : 8px 0;
+	font-size : 14px;
+	border-radius : 4px;
+	color : #fff;
+}
+
+.feedback p {
+	margin :0;
+}
+
+.feedback-success {
+	background-color : var(--feedback-success);
+}
+
+.feedback-error {
+	background-color : var(--feedback-error);
+}
+
+.error .field-error-message{
+    display: block;
+}
+
+.field-error-message {
+    color: red;
+    margin: 4px 0;
+    font-size: 13px;
+    display: none;
+}
+
+.form-group {
+  margin: 8px 0px;
+  height: 80px;
+}
+
+.form-group label {
+	display : inline-block;
+	margin-bottom : 8px;
+	font-size : 14px;
+}
+
+.form-group .input-control {
+    background-color: ghostwhite;
+    border: 1px solid #ccc;
+    border-radius : 2px;
+    padding: 8px;
+    display : block;
+    width: 100%;
+}
+
+.search-contacts-wrapper {
+	width: 98%;
+	height : 40px;
+    margin: 8px auto;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    position : relative;
+}
+
+.search-contacts-wrapper i {
+	position : absolute;
+	left : 16px;
+	top : 50%;
+	transform : translateY(-50%);
+}
+
+.search-contacts {
+	display: block;
+	width: 100%;
+	height: 100%;
+    padding: 12px 16px;
+    padding-left: 40px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+}
+
+@media(min-width : 600px){ 
+	
+	#displayName {
+		display : inline;
+	}
+	
+	header {
+		flex-wrap : nowrap;
+	}
+	
+	
+}
+
+
+@media(min-width : 768px){
+
+	:root {
+		--container-height : 80vh;
+	}
+	
+    .container section{
+        display: flex;
+    }
+
+    .contacts-wrapper {
+        flex-basis : 50%;
+    }
+
+    .messages-wrapper{
+        position: static;
+        flex-basis : 50%;
+        left: unset;
+        width: initial;
+        top: unset;
+        display: block;
+        transition: none;
+    }
+
+    .messages-wrapper h3 i {
+        display: none;
+    }
+
+    #contactName {
+        margin-left: 0;
+    }
+
+    main{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* background-color: #999; */
+
+    }
+
+    .container {
+        width: 90%;
+        height: var(--container-height);
+        box-shadow: 0px 10px 15px rgba(0,0,0,0.4);
+    }
+
+    .contact-list {
+        height: calc(var(--container-height) - (65px + 56px));
+    }
+
+    .message-container {
+        height: calc(var(--container-height) - 115px );
+    }
+    
+    #messageLog p {
+    	max-width : calc(90vw  * 0.3)
+    }
+    
+    .no-contact{
+        display: flex;
+        height : 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        text-align: center;
+        flex-direction: column;
+        color: var(--primary);
+        background-color: #fff;
+        line-height: 1.5;
+        border-left: 1px solid #ddd;
+    }
+
+    .no-contact i{
+        font-size: 4rem;
+        margin-bottom: 2rem;
+    }
+
+    .contact-selected {
+        border-left: 1px solid #fff;
+    }
+}
+
+@media(min-width : 900px){
+
+	:root {
+		--container-height : 75vh;
+	}
+	
+    .container {
+        width: 90%;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+            0 10px 10px rgba(0,0,0,0.22);
+    }
+    
+    
+    .contacts-wrapper {
+        flex-basis : 40%;
+    }
+
+    .messages-wrapper{
+        flex-basis : 60%;
+    }
+
+}
+

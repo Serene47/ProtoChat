@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
+    <link rel="stylesheet"  href="css/index.css">
+    <link rel="stylesheet" href="css/loader.css" />
+    <title>Proto Chat</title>
+</head>
+<body th:attr="data-user-id = ${ #authentication.principal.user_Id}">
+	<header>
+        <h1>Proto Chat</h1>
+        <div id="userActions" class="dropdown">
+        	<a id="userProfileButton"  >
+				<img id="displayPicture" class="thumbnail"  th:attr="src =  ${ #authentication.principal.getDisplayPictureThumbnailUrl() }" />
+				<span id="displayName" th:text="${#authentication.principal.displayName}" >Display Name</span>
+				<i class="fas fa-caret-down"></i>
+			</a>
+			<div class="dropdown-menu hide">
+				<a id="updateProfileButton" class="dropdown-item" >Update Profile</a>
+				<a id="updatePasswordButton" class="dropdown-item" >Update Password</a>
+				<a class="dropdown-item" href="/logout" >Logout</a>
+			</div>
+        </div>
+    </header>
+    <main>
+        <div class="container" >
+            
+            <section >
+                <div class="contacts-wrapper" >
+                	<div class="contacts-header">
+                		<h3 id="contactsTitle" >Recent Contacts</h3>
+                		<button id="toggleContacts" type="button"  > All Users</button>
+                	</div>
+                	
+                	<div class="search-contacts-wrapper" >
+                	
+                		<i class="fas fa-search" ></i>
+                	
+                		<input type="search" id="searchContacts" name="search-contacts" class="search-contacts" placeholder="Search..." >
+                	
+                	</div>
+                	
+					
+                    <ul id="recentContactList" class="contact-list" >
+                        <li th:each="contact : ${ recentContacts } " th:attr = "data-user-id = ${ contact.getUser_Id()}, data-display-name = ${ contact.getDisplayName()}, data-display-picture = ${ contact.getDisplayPictureUrl()}, data-chat-room-id =  ${ contact.getChatRoom_Id()}"  >
+                        	<p>
+                        		<img th:attr=" src = ${ contact.getDisplayPictureThumbnailUrl() }" class="thumbnail" />
+                        		<span class="contact-display-name" th:text="${ contact.getDisplayName() }" ></span>
+                        	</p>
+                        	<span class="active-messages" 
+                        	th:text="${ contact.getInCommingUnread() } > 0 ? ${contact.getInCommingUnread()}  : ''"
+                        	th:classappend="${ contact.getInCommingUnread() } > 0 ? '' : 'hide'"
+                        	 ></span>
+                        </li>
+                    </ul>
+                    <ul id="allContactList" class="contact-list hide"  >
+                        <li th:each="contact : ${ allContacts } " th:attr = "data-user-id = ${ contact.getUser_Id()} , data-display-name = ${ contact.getDisplayName()}, data-display-picture = ${ contact.getDisplayPictureThumbnailUrl()} "  >
+                        	<p>
+                        		<img th:attr=" src = ${ contact.getDisplayPictureThumbnailUrl() }" class="thumbnail" />
+                        		<span class="contact-display-name" th:text="${ contact.getDisplayName() }" ></span>
+                        	</p>
+                        </li>
+                    </ul>
+	            </div>
+                <div class="messages-wrapper" >
+                	<div class="no-contact">
+                        <i class="far fa-paper-plane"></i>
+                        <h2>What's wating for, Pick a contact to start conversation</h2>
+                    </div>
+                    <div class="contact-selected hide">
+                    	<h3 >
+	                        <a id="backButton">
+	                            <i class="fas fa-arrow-left"></i>
+	                        </a>
+	                        <img id="contactDisplayPicture" data-enlarged="false"
+	                        	class="thumbnail" >
+	                        <span id="contactName" ></span>
+	                    </h3>
+	                    <div class="message-container">
+	                        <div id="messagePlaceholder"></div>
+	                        <div id="messageLog" >
+	                           
+	                        </div>
+	                    </div>
+	                    <form name="messageForm" autocomplete="off">
+	                        <input type="text" name="message" placeholder="Enter messsage" >
+	                        <button type="submit" >
+	                            <i class="far fa-paper-plane"></i>
+	                        </button>
+	                    </form>
+                	</div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <article id="updatePasswordModal" class="modal hide">
+    
+    	<div class="modal-content" >
+    	
+    		<button class="close-modal-button" id="closePasswordModal" >
+    			<i class="fas fa-times"></i>
+    		</button>
+    		
+    		<div class="clearfix" ></div>
+    		
+    		<div class="content-wrapper" >
+    			<h2>Update Password</h2>
+    			
+    			<div id="passwordFeedback" class="feedback hide"  >
+					<p></p>
+				</div>
+    			
+    			<form name="updatePasswordForm" novalidate > 
+    		
+    				<div class="form-group" >
+    					<label for="currentPassword" >Current Password</label>
+    					<input type="password" class="input-control" name="currentPassword" id="currentPassword" required data-validate="true"  >
+    					<p class="field-error-message"></p>
+    				</div>
+    				
+    				<div class="form-group" >
+    					<label for="newPassword" >New Password</label>
+    					<input type="password" class="input-control" name="newPassword" id="newPassword" required minlength="8" maxlength="50" data-validate="true" >
+    					<p class="field-error-message"></p>
+    				</div>
+    			
+    				<button class="button" type="submit" >Update</button>
+    			
+    			</form>
+    		</div>
+    	
+    	</div>
+    
+    </article>
+    
+    <article id="updateProfileModal" class="modal hide">
+    
+    	<div class="modal-content" >
+   
+    		<button class="close-modal-button" id="closeProfileModal" >
+    			<i class="fas fa-times"></i>
+    		</button>
+    		
+    		<div class="clearfix" ></div>
+			
+			<div class="content-wrapper" >
+    			<h2>Update Profile</h2>
+    			
+    			<div id="displayPictureFeedback" class="feedback hide"  >
+					<p></p>
+				</div>
+    			
+    			<form name="updateDisplayPictureForm" novalidate  >
+    				
+    				<div class="manage-dp" >
+    					
+    					<img id="previewImage" 
+    					th:attr="src =  ${ #authentication.principal.getDisplayPictureUrl() }" />
+    					
+    					<div class="dp-controls" >
+    						<!-- th:text="${ #authentication.principal.getDisplayPicture() } == null ? 'Add Picture' : 'Change Picture'" -->
+    						<button type="button" id="changeImageButton" >
+    							<i class="fas fa-plus"></i>
+    						</button>
+    						<button  type="button"  id="removeImageButton" 
+    							th:classappend="${ #authentication.principal.getDisplayPicture() } == null ?  'hide' : '' "    >
+    							<i class="fas fa-trash"></i>
+    						</button>
+    					</div>
+    					
+    				</div>
+					
+					<div class="form-group" >
+						<input id="displayPic" type="file" name="displayPic" accept=".jpg,.png" data-min-size="50" data-max-size="1024" >
+						<p class="field-error-message"></p>
+					</div>
+					
+				</form>
+    			
+    			<div id="displayNameFeedback" class="feedback hide"  >
+					<p></p>
+				</div>
+    				
+				<form name="updateDisplayNameForm" novalidate >	
+					
+    				<div class="form-group" >
+    					<label for="displayNameInput" >Display Name</label>
+    					<input type="text" name="displayName" class="input-control" id="displayNameInput" th:attr="value = ${#authentication.principal.displayName}" required maxlength="50" data-validate="true" >
+    					<p class="field-error-message"></p>
+    				</div>
+    				
+    				<button class="button" type="submit"  >Update</button>
+    			
+    			</form>
+	
+			</div>
+    	
+    	</div>
+    
+    </article>
+    
+    <script src="js/index.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/updateprofile.js"></script>
+    <script src="js/updatepassword.js"></script>
+    <script src="js/loader.js"></script>
+</body>
+</html>

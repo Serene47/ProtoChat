@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/common-noauth.css" />
+		<title>Proto Chat </title>
+	</head>
+	<body>
+		<header>
+			<h1>Proto Chat</h1>
+			<p>A very simple chat app</p>
+		</header>
+		<main>
+			<div class="box" >
+				<div class="feedback feedback-error" th:if="${error}  != null" th:text="${error}" >
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

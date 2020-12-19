@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/common-noauth.css" />
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/loader.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous" />
+    <title>Proto Chat</title>
+</head>
+
+<body>
+
+	<header>
+		<h1>Proto Chat</h1>
+		<p>A very simple chat app</p>
+  	</header>
+  	
+	<main>
+   		
+   		<div class="container" id="container">
+   		
+   		    <div class="form-container sign-up-container flex-center-column">
+
+ 		    	<h2>Create Account</h2>
+
+                <div class="change-view-content" >
+                  <span>One of us ? </span>
+                  <a  id="smallScreenSignin" class="change-view-button" > Sign In </a>
+                </div>
+
+				<div id="signUpFeedback" class="feedback hide" >
+				</div>
+
+ 		       	<form action="#" name="signupForm"   autocomplete="off" novalidate >
+   		            <div class="form-group">
+  		            	<label for="displayName">Display Name</label>
+  		            	<input type="text" name="displayName" class="input-control" id="displayName" placeholder="Display Name" required maxlength="50"  data-validate="true"  />
+                       	<p class="field-error-message"></p>
+   		            </div>
+   		            <div class="form-group">
+ 		            	<label for="signup-email">Email </label>
+ 		            	<input type="email"  name="username"  class="input-control" id="signup-email" placeholder="Email" required maxlength="50" data-validate="true" />
+                       	<p class="field-error-message"></p>
+   		            </div>
+
+   		            <div class="form-group">
+		            	<label for="signup-password">Password </label>
+		            	<input type="password" name="password" class="input-control" id="signup-password" placeholder="Password" required minlength="8" maxlength="50" data-validate="true"  />
+                       	<p class="field-error-message"></p>
+   		            </div>
+ 		            <button type="submit" name="signup" >Sign Up</button>
+ 		    	</form>
+	        </div>
+	        <div class="form-container sign-in-container flex-center-column">
+
+            	<h2>Sign In</h2>
+
+               	<div class="change-view-content" >
+                 	<span>New Here ? </span>
+                 	<a id="smallScreenSignup" class="change-view-button" > Sign Up </a>
+               	</div>
+
+ 	            <div class="feedback feedback-error" th:if="${param.error != null && session[SPRING_SECURITY_LAST_EXCEPTION] != null} " >
+   					<span th:if="${session[SPRING_SECURITY_LAST_EXCEPTION].message} == 'User is disabled'">Please verify email id</span>
+   					<span th:if="${session[SPRING_SECURITY_LAST_EXCEPTION].message} == 'Bad credentials' ">Bad credentials</span>
+   				</div>
+   				
+   				<div class="feedback feedback-success" th:if="${passwordResetSuccess} != null" th:text="${passwordResetSuccess}" >
+   			
+   				</div>
+   				
+   				<div class="feedback feedback-success" th:if="${registrationsuccess} != null" th:text="${registrationsuccess}" >
+   			
+   				</div>
+   				
+              	<form method="post"  action="/performLogin" name="signinForm" autocomplete="off" novalidate >
+	                <div class="form-group">
+	               		<label for="signin-email">Email</label>
+	                	<input type="email" class="input-control" placeholder="Email" id="signin-email" name="username" required data-validate="true"  />
+	                    <p class="field-error-message"></p>
+	                </div>
+
+   		            <div class="form-group">
+   		            	<label for="signin-password">Password </label>
+                       	<a target="_blank" class="forgot-password" href="/forgotPassword" tabindex="-1" >Forgot your password?</a>
+   		            	<input type="password" placeholder="Password" class="input-control" id="signin-password" name="password" required data-validate="true"  />
+                       	<p class="field-error-message"></p>
+   		            </div>
+   	              	<div class="form-group">
+	                    <labeL>
+	                    	<input type="checkbox" class="remember-me" name="remember-me" > Remember Me
+	                    </labeL>
+                   	</div>
+ 	            	<button type="submit" name="signin" >Sign In</button>
+           		</form>
+           	</div>
+	        <div class="overlay-container">
+	            <div class="overlay">
+   		            <div class="overlay-panel overlay-left">
+   		                <h2>One Of Us ?</h2>
+   		                <p>If you already have an account, just sign in. We've missed you!</p>
+   		                <button class="ghost"  id="signIn">Sign In</button>
+   		            </div>
+   		            <div class="overlay-panel overlay-right">
+   		                <h2>New Here ?</h2>
+   		                <p>Sign up and chat with your friends!</p>
+   		                <button class="ghost"  id="signUp">Sign Up</button>
+   		            </div>
+	            </div>
+	        </div>
+	    </div>
+    </main>
+	<script src="js/login.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/loader.js"></script>
+</body>
+</html>

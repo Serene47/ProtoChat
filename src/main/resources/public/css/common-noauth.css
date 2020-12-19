@@ -1,0 +1,120 @@
+
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+	--primary : #006064;
+	--primary-light : #0097a7;
+	--text-primary : #555;
+	--feedback-error : #f09592;
+	--feedback-success : #5fbb72;;
+	--shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.hide {
+	display : none !important;
+}
+
+body {
+    background: #f6f5f7;
+    font-family: 'Montserrat', sans-serif;
+}
+
+header {
+	height : 200px;
+	display : flex;
+	flex-direction : column;
+	align-items : center;
+	justify-content : center;
+}
+
+header h1{
+	font-size : 32px;
+	color : var(--primary);
+	margin: 0;
+    margin-bottom: 10px;
+}
+
+header p {
+	margin :10px 0;
+	color : var(--text-primary);
+}
+
+.feedback {
+	padding : 8px;
+	margin : 8px 0;
+	font-size : 14px;
+	border-radius : 4px;
+	color : #fff;
+}
+
+.feedback-success {
+	background-color : var(--feedback-success);
+}
+
+.feedback-error {
+	background-color : var(--feedback-error);
+}
+
+.box {
+	width : 90%;
+	max-width : 600px;
+	margin : 16px auto;
+	background-color : #fff;
+	box-shadow : var(--shadow);
+	border-radius : 4px;
+	padding : 24px;
+}
+
+.form-group {
+  margin: 8px 0px;
+  height: 80px;
+}
+
+.form-group label {
+	display : inline-block;
+	margin-bottom : 8px;
+	font-size : 14px;
+}
+
+.form-group .input-control {
+    background-color: ghostwhite;
+    border: 1px solid #ccc;
+    border-radius : 2px;
+    padding: 8px;
+    display : block;
+    width: 100%;
+}
+
+.action-button {
+    border-radius: 20px;
+    border: 1px solid var(--primary);
+    background-color: var(--primary);
+    color: #fff;
+    padding: 12px 24px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+}
+
+.error .field-error-message{
+    display: block;
+}
+
+.field-error-message {
+    color: red;
+    margin: 4px 0;
+    font-size: 13px;
+    display: none;
+}
+
+.action-button:active {
+    transform: scale(0.95);
+}
+
+.action-button:focus {
+    outline: none;
+}
