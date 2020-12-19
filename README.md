@@ -25,7 +25,7 @@ Preview
 
 * Chat Large Screen
 
-  <img src="screenshots/chat-largre.png" width="800"  />
+  <img src="screenshots/chat-large.png" width="800"  />
 
 * Chat Small Screen
 
